@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'idea'
+    id 'maven'
+    id "org.gretty" version "3.0.1"
+}
+
+group 'com.study'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+[compileJava, javadoc, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+//    mavenCentral()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+}
+
+gretty{
+    httpPort = 8080
+    contextPath = '/gradle-01'
+    host = 'localhost'
+    httpEnabled = true
+    servletContainer = "tomcat9"
+    //热部署
+    scanInterval = 1
+    fastReload = true
+    loggingLevel = "DEBUG"
+    consoleLogEnabled = true
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    compile group: 'org.springframework', name: 'spring-context', version: '5.1.5.RELEASE'
+}
+//编译时UTF-8
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+
+
